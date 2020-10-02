@@ -8,6 +8,9 @@ using Prism.Commands;
 using System.Collections.ObjectModel;
 using WMPLib;
 using System.Speech.Synthesis;
+using keisan_kun.Model;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace keisan_kun.ViewModel
 {
@@ -20,14 +23,16 @@ namespace keisan_kun.ViewModel
         private readonly string K_BOO = @"./sounds/boo.mp3";
         private readonly string K_PIPO = @"./sounds/pipo.mp3";
         private readonly string K_PIPO2 = @"./sounds/pipopipo.mp3";
+        private readonly string K_SCORES_CONF = @"./scores.json";
         #endregion
 
         private WindowsMediaPlayer _mediaPlayer = new WindowsMediaPlayer();
         private WindowsMediaPlayer _BGMPlayer = new WindowsMediaPlayer();
         private int max = 10;
         private int min = 0;
-        Random random1 = new Random(1);
-        Random random2 = new Random(2);
+        private Random random1 = new Random(1);
+        private Random random2 = new Random(2);
+        private UserScores _UserScores;
 
         #region Notifiable Property
         private int _FirstValue;
@@ -117,6 +122,7 @@ namespace keisan_kun.ViewModel
         public MainWindowViewModel()
         {
             CreateCommands();
+            LoadSetting();
 
             m_Points = 0;
             K_OPERATORS = new Dictionary<string, string>() { { K_ADDSTR, "+" }, { K_SUBSTR, "-" } };
@@ -126,6 +132,15 @@ namespace keisan_kun.ViewModel
             //PlayBGM();
             UpdateProblem();
             SpeechProblem();
+        }
+
+        private void LoadSetting()
+        {
+            using(var sr = new StreamReader(K_SCORES_CONF))
+            {
+                var scoresJson = sr.ReadToEnd();
+                _UserScores = JsonConvert.DeserializeObject<UserScores>(scoresJson);
+            }
         }
 
         private void PlayBGM()
