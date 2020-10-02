@@ -5,7 +5,13 @@
       "name": "ryou",
       "Scores": [
         {
-          "operator": "add",
+          "operator": "+",
+          "total_challenge": 0,
+          "correct": 0,
+          "incorrect": 0
+        },
+        {
+          "operator": "-",
           "total_challenge": 0,
           "correct": 0,
           "incorrect": 0
@@ -17,7 +23,13 @@
       "name": "takeshi",
       "Scores": [
         {
-          "operator": "sub",
+          "operator": "+",
+          "total_challenge": 0,
+          "correct": 0,
+          "incorrect": 0
+        },
+        {
+          "operator": "-",
           "total_challenge": 0,
           "correct": 0,
           "incorrect": 0
