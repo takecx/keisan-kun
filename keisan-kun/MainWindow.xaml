@@ -4,7 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:keisan_kun"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"        xmlns:local="clr-namespace:keisan_kun"
         xmlns:vm="clr-namespace:keisan_kun.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -12,16 +16,6 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Window.InputBindings>
-        <!--<KeyBinding Key="NumPad0" Command="{Binding SetAnswerCommand}" CommandParameter="0"/>
-        <KeyBinding Key="NumPad1" Command="{Binding SetAnswerCommand}" CommandParameter="1"/>
-        <KeyBinding Key="NumPad2" Command="{Binding SetAnswerCommand}" CommandParameter="2"/>
-        <KeyBinding Key="NumPad3" Command="{Binding SetAnswerCommand}" CommandParameter="3"/>
-        <KeyBinding Key="NumPad4" Command="{Binding SetAnswerCommand}" CommandParameter="4"/>
-        <KeyBinding Key="NumPad5" Command="{Binding SetAnswerCommand}" CommandParameter="5"/>
-        <KeyBinding Key="NumPad6" Command="{Binding SetAnswerCommand}" CommandParameter="6"/>
-        <KeyBinding Key="NumPad7" Command="{Binding SetAnswerCommand}" CommandParameter="7"/>
-        <KeyBinding Key="NumPad8" Command="{Binding SetAnswerCommand}" CommandParameter="8"/>
-        <KeyBinding Key="NumPad9" Command="{Binding SetAnswerCommand}" CommandParameter="9"/>-->
         <KeyBinding Gesture="Enter" Command="{Binding ExcecuteCalcCommand}"/>
     </Window.InputBindings>
     <Grid>
@@ -36,7 +30,6 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="{Binding m_LatestStatus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30"/>
             <Label Grid.Column="1" Content="{Binding m_Points,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30"/>
-            <materialDesign:PackIcon Grid.Column="0" Kind="Battery90" Margin="0,0,0,34" VerticalAlignment="Stretch" Height="Auto"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
