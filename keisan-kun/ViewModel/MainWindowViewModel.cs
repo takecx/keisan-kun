@@ -23,15 +23,15 @@ namespace keisan_kun.ViewModel
         private readonly string K_BOO = @"./sounds/boo.mp3";
         private readonly string K_PIPO = @"./sounds/pipo.mp3";
         private readonly string K_PIPO2 = @"./sounds/pipopipo.mp3";
-        private readonly string K_SCORES_CONF = @"./scores.json";
+        private readonly string K_SCORES_CONF = @"./data/scores.json";
         #endregion
 
         private WindowsMediaPlayer _mediaPlayer = new WindowsMediaPlayer();
         private WindowsMediaPlayer _BGMPlayer = new WindowsMediaPlayer();
         private int max = 10;
         private int min = 0;
-        private Random random1 = new Random(1);
-        private Random random2 = new Random(2);
+        private Random random1 = new Random(DateTime.Now.GetHashCode());
+        private Random random2 = new Random(DateTime.Now.GetHashCode() + 1);
         private UserScores _UserScores;
 
         #region Notifiable Property
@@ -81,19 +81,7 @@ namespace keisan_kun.ViewModel
             {
                 this.SetProperty(ref this._CurrentCalcType, value);
                 UpdateUntilPositive();
-            }
-        }
-
-        private void UpdateUntilPositive()
-        {
-            if (m_CurrentCalcType ==　K_OPERATORS[K_SUBSTR] && m_FirstValue - m_SecondValue < 0)
-            {
-                // 0より おおきな すうじに なるようにする
-                while (m_FirstValue - m_SecondValue < 0)
-                {
-                    UpdateProblem();
-                }
-                SpeechProblem();
+                if(m_CurrentSelectedUserName != null) UpdateScoresForDisplay();
             }
         }
 
@@ -102,6 +90,45 @@ namespace keisan_kun.ViewModel
         {
             get { return _LatestStatus; }
             set { this.SetProperty(ref this._LatestStatus, value); }
+        }
+
+        private ObservableCollection<string> _UserNames = new ObservableCollection<string>();
+        public ObservableCollection<string> m_UserNames
+        {
+            get { return _UserNames; }
+            set { this.SetProperty(ref this._UserNames, value); }
+        }
+
+        private string _CurrentSelectedUserName;
+        public string m_CurrentSelectedUserName
+        {
+            get { return _CurrentSelectedUserName; }
+            set {
+                this.SetProperty(ref this._CurrentSelectedUserName, value);
+                UpdateScoresForDisplay();
+                m_Points = 0;
+            }
+        }
+
+        private int _CurOperatorTotalChallenge;
+        public int m_CurOperatorTotalChallenge
+        {
+            get { return _CurOperatorTotalChallenge; }
+            set { this.SetProperty(ref this._CurOperatorTotalChallenge, value); }
+        }
+
+        private int _CurOperatorCorrect;
+        public int m_CurOperatorCorrect
+        {
+            get { return _CurOperatorCorrect; }
+            set { this.SetProperty(ref this._CurOperatorCorrect, value); }
+        }
+
+        private int _CurOperatorIncorrect;
+        public int m_CurOperatorIncorrect
+        {
+            get { return _CurOperatorIncorrect; }
+            set { this.SetProperty(ref this._CurOperatorIncorrect, value); }
         }
 
         #endregion
@@ -128,10 +155,20 @@ namespace keisan_kun.ViewModel
             K_OPERATORS = new Dictionary<string, string>() { { K_ADDSTR, "+" }, { K_SUBSTR, "-" } };
             m_CalcTypes = new ObservableCollection<string>(K_OPERATORS.Values);
             m_CurrentCalcType = K_OPERATORS[K_ADDSTR];
+            m_UserNames = new ObservableCollection<string>(_UserScores.m_Users.Select(x => x.m_Username));
 
             //PlayBGM();
             UpdateProblem();
             SpeechProblem();
+        }
+
+        ~MainWindowViewModel()
+        {
+            var scoresResult = JsonConvert.SerializeObject(_UserScores);
+            using(var sw = new StreamWriter(K_SCORES_CONF))
+            {
+                sw.Write(scoresResult);
+            }
         }
 
         private void LoadSetting()
@@ -156,6 +193,19 @@ namespace keisan_kun.ViewModel
         {
             ExcecuteCalcCommand = new DelegateCommand(ExcecuteCalc, CanExcecuteCalc);
             SetAnswerCommand = new DelegateCommand<string>(SetAnswer, CanSetAnswerCommand);
+        }
+
+        private void UpdateUntilPositive()
+        {
+            if (m_CurrentCalcType == K_OPERATORS[K_SUBSTR] && m_FirstValue - m_SecondValue < 0)
+            {
+                // 0より おおきな すうじに なるようにする
+                while (m_FirstValue - m_SecondValue < 0)
+                {
+                    UpdateProblem();
+                }
+                SpeechProblem();
+            }
         }
 
         private void PlaySounds(string path)
@@ -189,6 +239,8 @@ namespace keisan_kun.ViewModel
                 // せいかい
                 m_Points++;
                 m_LatestStatus = "◎";
+                PlusCorrectAnswerCount();
+                UpdateScoresForDisplay();
                 if(m_Points % 10 == 0)
                 {
                     PlaySounds(K_PIPO2);
@@ -206,9 +258,52 @@ namespace keisan_kun.ViewModel
                 // まちがい
                 m_Points--;
                 m_LatestStatus = "X";
+                PlusIncorrectAnswerCount();
+                UpdateScoresForDisplay();
                 PlaySounds(K_BOO);
             }
             m_Answer = null;
+        }
+
+        /// <summary>
+        /// 得点表示を更新する
+        /// </summary>
+        private void UpdateScoresForDisplay()
+        {
+            var targetScore = SearchTargetScore();
+            m_CurOperatorTotalChallenge = targetScore.m_TotalChallenge;
+            m_CurOperatorCorrect = targetScore.m_Correct;
+            m_CurOperatorIncorrect = targetScore.m_Incorrect;
+        }
+
+        /// <summary>
+        /// 不正解数を増やす
+        /// </summary>
+        private void PlusIncorrectAnswerCount()
+        {
+            var targetScore = SearchTargetScore();
+            targetScore.m_TotalChallenge++;
+            targetScore.m_Incorrect++;
+        }
+
+        /// <summary>
+        /// 正解数を増やす
+        /// </summary>
+        private void PlusCorrectAnswerCount()
+        {
+            var targetScore = SearchTargetScore();
+            targetScore.m_TotalChallenge++;
+            targetScore.m_Correct++;
+        }
+
+        /// <summary>
+        /// 対象のScoreオブジェクトを取得する
+        /// </summary>
+        /// <returns></returns>
+        private Score SearchTargetScore()
+        {
+            var targetUser = _UserScores.m_Users.Where(x => x.m_Username == m_CurrentSelectedUserName).Select(x => x).First();
+            return targetUser.m_Scores.Where(x => x.m_Operator == m_CurrentCalcType).Select(x => x).First();
         }
 
         private void SpeechProblem()
