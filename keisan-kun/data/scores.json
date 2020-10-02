@@ -1,0 +1,28 @@
+{
+  "Scores": [
+    {
+      "id": 1,
+      "name": "ryou",
+      "Scores": [
+        {
+          "operator": "add",
+          "total_challenge": 0,
+          "correct": 0,
+          "incorrect": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "takeshi",
+      "Scores": [
+        {
+          "operator": "sub",
+          "total_challenge": 0,
+          "correct": 0,
+          "incorrect": 0
+        }
+      ]
+    }
+  ]
+}
