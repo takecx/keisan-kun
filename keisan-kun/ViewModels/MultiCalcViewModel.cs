@@ -358,17 +358,15 @@ namespace keisan_kun.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
         }
     }
 }
