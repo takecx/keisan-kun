@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +24,7 @@ namespace keisan_kun
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<Views.Home>();
+            containerRegistry.RegisterForNavigation<Views.TrialSetting>();
             containerRegistry.RegisterForNavigation<Views.MultiCalc>();
         }
     }
