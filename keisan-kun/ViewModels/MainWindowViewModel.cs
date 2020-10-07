@@ -19,10 +19,26 @@ namespace keisan_kun.ViewModels
     {
         private readonly IRegionManager _regionManager;
 
+        #region Commands
+        public DelegateCommand GoToHomeCommand { get; private set; }
+        #endregion
+
         public MainWindowViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            _regionManager.RegisterViewWithRegion("ContentRegion", typeof(Views.MultiCalc));
+            _regionManager.RegisterViewWithRegion("ContentRegion", typeof(Views.Home));
+
+            CreateCommands();
+        }
+
+        private void CreateCommands()
+        {
+            GoToHomeCommand = new DelegateCommand(GoToHome);
+        }
+
+        private void GoToHome()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "Home");
         }
     }
 }
