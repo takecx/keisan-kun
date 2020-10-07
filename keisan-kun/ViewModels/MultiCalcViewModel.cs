@@ -1,20 +1,21 @@
-﻿using System;
+﻿using keisan_kun.Model;
+using Newtonsoft.Json;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
-using Prism.Mvvm;
-using Prism.Commands;
-using System.Collections.ObjectModel;
 using WMPLib;
-using System.Speech.Synthesis;
-using keisan_kun.Model;
-using Newtonsoft.Json;
-using System.IO;
 
-namespace keisan_kun.ViewModel
+namespace keisan_kun.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    class MultiCalcViewModel : BindableBase, INavigationAware
     {
         #region ていすう
         private readonly string K_ADDSTR = "たす";
@@ -25,6 +26,8 @@ namespace keisan_kun.ViewModel
         private readonly string K_PIPO2 = @"./sounds/pipopipo.mp3";
         private readonly string K_SCORES_CONF = @"./data/scores.json";
         #endregion
+
+        private readonly IRegionManager _regionManager;
 
         private WindowsMediaPlayer _mediaPlayer = new WindowsMediaPlayer();
         private WindowsMediaPlayer _BGMPlayer = new WindowsMediaPlayer();
@@ -53,7 +56,8 @@ namespace keisan_kun.ViewModel
         public int? m_Answer
         {
             get { return _Answer; }
-            set {
+            set
+            {
                 //if()
                 this.SetProperty(ref this._Answer, value);
             }
@@ -81,7 +85,7 @@ namespace keisan_kun.ViewModel
             {
                 this.SetProperty(ref this._CurrentCalcType, value);
                 UpdateUntilPositive();
-                if(m_CurrentSelectedUserName != null) UpdateScoresForDisplay();
+                if (m_CurrentSelectedUserName != null) UpdateScoresForDisplay();
             }
         }
 
@@ -103,7 +107,8 @@ namespace keisan_kun.ViewModel
         public string m_CurrentSelectedUserName
         {
             get { return _CurrentSelectedUserName; }
-            set {
+            set
+            {
                 this.SetProperty(ref this._CurrentSelectedUserName, value);
                 UpdateScoresForDisplay();
                 m_Points = 0;
@@ -146,8 +151,10 @@ namespace keisan_kun.ViewModel
         }
         #endregion
 
-        public MainWindowViewModel()
+        public MultiCalcViewModel(IRegionManager regionManager)
         {
+            _regionManager = regionManager;
+
             CreateCommands();
             LoadSetting();
 
@@ -162,10 +169,10 @@ namespace keisan_kun.ViewModel
             SpeechProblem();
         }
 
-        ~MainWindowViewModel()
+        ~MultiCalcViewModel()
         {
             var scoresResult = JsonConvert.SerializeObject(_UserScores);
-            using(var sw = new StreamWriter(K_SCORES_CONF))
+            using (var sw = new StreamWriter(K_SCORES_CONF))
             {
                 sw.Write(scoresResult);
             }
@@ -173,7 +180,7 @@ namespace keisan_kun.ViewModel
 
         private void LoadSetting()
         {
-            using(var sr = new StreamReader(K_SCORES_CONF))
+            using (var sr = new StreamReader(K_SCORES_CONF))
             {
                 var scoresJson = sr.ReadToEnd();
                 _UserScores = JsonConvert.DeserializeObject<UserScores>(scoresJson);
@@ -216,7 +223,7 @@ namespace keisan_kun.ViewModel
 
         private void SetAnswer(string val)
         {
-            if(int.TryParse(val,out int valInt))
+            if (int.TryParse(val, out int valInt))
             {
                 m_Answer = int.Parse(val);
             }
@@ -228,7 +235,7 @@ namespace keisan_kun.ViewModel
 
         private void ExcecuteCalc()
         {
-            if(m_Answer == null)
+            if (m_Answer == null)
             {
                 // MessageBox.Show("");
                 return;
@@ -241,7 +248,7 @@ namespace keisan_kun.ViewModel
                 m_LatestStatus = "◎";
                 PlusCorrectAnswerCount();
                 UpdateScoresForDisplay();
-                if(m_Points % 10 == 0)
+                if (m_Points % 10 == 0)
                 {
                     PlaySounds(K_PIPO2);
                 }
@@ -324,11 +331,11 @@ namespace keisan_kun.ViewModel
 
         private bool CheckAnswer(int first, int second, int? answer)
         {
-            if(m_CurrentCalcType == K_OPERATORS[K_ADDSTR])
+            if (m_CurrentCalcType == K_OPERATORS[K_ADDSTR])
             {
                 return CheckAddAnswer(first, second, answer);
             }
-            else if(m_CurrentCalcType == K_OPERATORS[K_SUBSTR])
+            else if (m_CurrentCalcType == K_OPERATORS[K_SUBSTR])
             {
                 return CheckSubAnswer(first, second, answer);
             }
@@ -349,5 +356,19 @@ namespace keisan_kun.ViewModel
             else return false;
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

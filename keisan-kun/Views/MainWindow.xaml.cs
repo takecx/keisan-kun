@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace keisan_kun
+namespace keisan_kun.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
