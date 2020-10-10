@@ -5,15 +5,99 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:keisan_kun.Views"
              mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="CandidateRadioButton" TargetType="RadioButton"  BasedOn="{StaticResource MaterialDesignFlatPrimaryToggleButton}">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="70"/>
+        </Style>
+        <Style x:Key="MarginedCandidateRadioButton" TargetType="RadioButton"  BasedOn="{StaticResource MaterialDesignFlatPrimaryToggleButton}">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Margin" Value="20 0 0 0"/>
+        </Style>
+        <Style x:Key="CandidateIcon" TargetType="materialDesign:PackIcon" >
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingItemIcon" TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="{Binding m_Mode}"/>
-        <Button Grid.Row="1" Content="Start!!!" Command="{Binding GoToTrialCommand}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="TimerSand" Style="{StaticResource SettingItemIcon}"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                        <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Text="60" 
+                                   FontWeight="ExtraBold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                        <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Text="120" 
+                                   FontWeight="ExtraBold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                        <materialDesign:PackIcon Kind="Infinity" Style="{StaticResource CandidateIcon}" />
+                    </RadioButton>
+
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="CalculatorVariant" Style="{StaticResource SettingItemIcon}"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                        <materialDesign:PackIcon Kind="Plus" Style="{StaticResource CandidateIcon}"/>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                        <materialDesign:PackIcon Kind="Minus" Style="{StaticResource CandidateIcon}" />
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False">
+                        <materialDesign:PackIcon Kind="Close" Style="{StaticResource CandidateIcon}" />
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False">
+                        <materialDesign:PackIcon Kind="Division" Style="{StaticResource CandidateIcon}" />
+                    </RadioButton>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Button Grid.Row="1" Grid.Column="1" Command="{Binding GoToTrialCommand}" 
+                Style="{StaticResource MaterialDesignIconButton}" Width="300" Height="300">
+            <materialDesign:PackIcon Kind="Play" Width="200" Height="200" 
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
     </Grid>
 </UserControl>
