@@ -79,16 +79,16 @@
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Grid.Column="0" Kind="CalculatorVariant" Style="{StaticResource SettingItemIcon}"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedPlusOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Plus" Style="{StaticResource CandidateIcon}"/>
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedMinusOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Minus" Style="{StaticResource CandidateIcon}" />
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False" IsChecked="{Binding m_IsCheckedMultiplyOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Close" Style="{StaticResource CandidateIcon}" />
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False" IsChecked="{Binding m_IsCheckedDivisionOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Division" Style="{StaticResource CandidateIcon}" />
                     </RadioButton>
                 </StackPanel>
