@@ -58,15 +58,15 @@
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Grid.Column="0" Kind="TimerSand" Style="{StaticResource SettingItemIcon}"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial60sec,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Text="60" 
                                    FontWeight="ExtraBold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial120sec,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Text="120" 
                                    FontWeight="ExtraBold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}">
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrialInfinity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Infinity" Style="{StaticResource CandidateIcon}" />
                     </RadioButton>
 

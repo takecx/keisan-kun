@@ -15,11 +15,25 @@ namespace keisan_kun.ViewModels
 
         #region NotifiableProperty
 
-        private string _Mode;
-        public string m_Mode
+        private bool _IsCheckedTrial60sec = false;
+        public bool m_IsCheckedTrial60sec
         {
-            get { return _Mode; }
-            set { this.SetProperty(ref this._Mode, value); }
+            get { return _IsCheckedTrial60sec; }
+            set { this.SetProperty(ref this._IsCheckedTrial60sec, value); }
+        }
+
+        private bool _IsCheckedTrial120sec = false;
+        public bool m_IsCheckedTrial120sec
+        {
+            get { return _IsCheckedTrial120sec; }
+            set { this.SetProperty(ref this._IsCheckedTrial120sec, value); }
+        }
+
+        private bool _IsCheckedTrialInfinity = false;
+        public bool m_IsCheckedTrialInfinity
+        {
+            get { return _IsCheckedTrialInfinity; }
+            set { this.SetProperty(ref this._IsCheckedTrialInfinity, value); }
         }
 
         #endregion
@@ -70,7 +84,6 @@ namespace keisan_kun.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            m_Mode = navigationContext.Parameters["mode"] as string;
         }
     }
 }
