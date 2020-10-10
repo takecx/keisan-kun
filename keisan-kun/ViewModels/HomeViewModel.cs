@@ -14,7 +14,7 @@ namespace keisan_kun.ViewModels
         private readonly IRegionManager _regionManager;
 
         #region Commands
-        public DelegateCommand<string> GoToTrialSettingCommand { get; private set; }
+        public DelegateCommand GoToTrialSettingCommand { get; private set; }
         #endregion
 
         public HomeViewModel(IRegionManager regionManager)
@@ -26,17 +26,12 @@ namespace keisan_kun.ViewModels
 
         private void CreateCommands()
         {
-            GoToTrialSettingCommand = new DelegateCommand<string>(GoToTrialSetting);
+            GoToTrialSettingCommand = new DelegateCommand(GoToTrialSetting);
         }
 
-        private void GoToTrialSetting(string obj)
+        private void GoToTrialSetting()
         {
-            if(obj != null)
-            {
-                var navParams = new NavigationParameters();
-                navParams.Add("mode", obj);
-                _regionManager.RequestNavigate("ContentRegion", "TrialSetting", navParams);
-            }
+            _regionManager.RequestNavigate("ContentRegion", "TrialSetting");
         }
 
         /// <summary>
