@@ -15,22 +15,42 @@ namespace keisan_kun.ViewModels
 
         #region NotifiableProperty
 
-        private bool _IsCheckedTrial60sec = false;
-        public bool m_IsCheckedTrial60sec
+        private bool _IsCheckedTrial1m = false;
+        public bool m_IsCheckedTrial1m
         {
-            get { return _IsCheckedTrial60sec; }
+            get { return _IsCheckedTrial1m; }
             set { 
-                this.SetProperty(ref this._IsCheckedTrial60sec, value);
+                this.SetProperty(ref this._IsCheckedTrial1m, value);
                 GoToTrialCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private bool _IsCheckedTrial120sec = false;
-        public bool m_IsCheckedTrial120sec
+        private bool _IsCheckedTrial3m = false;
+        public bool m_IsCheckedTrial3m
         {
-            get { return _IsCheckedTrial120sec; }
+            get { return _IsCheckedTrial3m; }
             set { 
-                this.SetProperty(ref this._IsCheckedTrial120sec, value); 
+                this.SetProperty(ref this._IsCheckedTrial3m, value); 
+                GoToTrialCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private bool _IsCheckedTrial5m = false;
+        public bool m_IsCheckedTrial5m
+        {
+            get { return _IsCheckedTrial5m; }
+            set { 
+                this.SetProperty(ref this._IsCheckedTrial5m, value); 
+                GoToTrialCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private bool _IsCheckedTrial10m = false;
+        public bool m_IsCheckedTrial10m
+        {
+            get { return _IsCheckedTrial10m; }
+            set { 
+                this.SetProperty(ref this._IsCheckedTrial10m, value); 
                 GoToTrialCommand.RaiseCanExecuteChanged();
             }
         }
@@ -96,7 +116,7 @@ namespace keisan_kun.ViewModels
 
         private bool CheckIsCheckedMode()
         {
-            return m_IsCheckedTrial60sec || m_IsCheckedTrial120sec || m_IsCheckedTrialInfinity;
+            return m_IsCheckedTrial1m || m_IsCheckedTrial3m || m_IsCheckedTrial5m || m_IsCheckedTrial10m || m_IsCheckedTrialInfinity;
         }
 
         private bool CheckIsCheckedOperator()

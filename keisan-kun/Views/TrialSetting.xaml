@@ -11,75 +11,55 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Style x:Key="CandidateRadioButton" TargetType="RadioButton"  BasedOn="{StaticResource MaterialDesignFlatPrimaryToggleButton}">
-            <Setter Property="Width" Value="70"/>
-            <Setter Property="Height" Value="70"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Margin" Value="40 0 0 0"/>
         </Style>
-        <Style x:Key="MarginedCandidateRadioButton" TargetType="RadioButton"  BasedOn="{StaticResource MaterialDesignFlatPrimaryToggleButton}">
-            <Setter Property="Width" Value="70"/>
-            <Setter Property="Height" Value="70"/>
+        <Style x:Key="MarginedCandidateRadioButton" TargetType="RadioButton"  BasedOn="{StaticResource CandidateRadioButton}">
             <Setter Property="Margin" Value="20 0 0 0"/>
         </Style>
         <Style x:Key="CandidateIcon" TargetType="materialDesign:PackIcon" >
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Width" Value="80"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
         <Style x:Key="SettingItemIcon" TargetType="materialDesign:PackIcon">
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20 0 0 0"/>
+        </Style>
+        <Style x:Key="CnadidateNum" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline3TextBlock}">
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="FontSize" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="300"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.RowSpan="2">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <materialDesign:PackIcon Grid.Column="0" Kind="TimerSand" Style="{StaticResource SettingItemIcon}"/>
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial60sec,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                        <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Text="60" 
-                                   FontWeight="ExtraBold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial120sec,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                        <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Text="120" 
-                                   FontWeight="ExtraBold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrialInfinity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                        <materialDesign:PackIcon Kind="Infinity" Style="{StaticResource CandidateIcon}" />
-                    </RadioButton>
-
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Grid.Column="0" Kind="CalculatorVariant" Style="{StaticResource SettingItemIcon}"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
-                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedPlusOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <RadioButton Style="{StaticResource CandidateRadioButton}" IsChecked="{Binding m_IsCheckedPlusOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Plus" Style="{StaticResource CandidateIcon}"/>
                     </RadioButton>
                     <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedMinusOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
@@ -91,6 +71,31 @@
                     <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsEnabled="False" IsChecked="{Binding m_IsCheckedDivisionOperator,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <materialDesign:PackIcon Kind="Division" Style="{StaticResource CandidateIcon}" />
                     </RadioButton>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="TimerSand" Style="{StaticResource SettingItemIcon}"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <RadioButton Style="{StaticResource CandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial1m,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock Text="1" Style="{StaticResource CnadidateNum}" />
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial3m,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock Text="3" Style="{StaticResource CnadidateNum}" />
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial5m,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock Text="5" Style="{StaticResource CnadidateNum}" />
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrial10m,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock Text="10" Style="{StaticResource CnadidateNum}" />
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MarginedCandidateRadioButton}" IsChecked="{Binding m_IsCheckedTrialInfinity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <materialDesign:PackIcon Kind="Infinity" Style="{StaticResource CandidateIcon}" />
+                    </RadioButton>
+
                 </StackPanel>
             </Grid>
         </Grid>
