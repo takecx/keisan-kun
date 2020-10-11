@@ -25,6 +25,7 @@ namespace keisan_kun
         {
             containerRegistry.RegisterForNavigation<Views.Home>();
             containerRegistry.RegisterForNavigation<Views.TrialSetting>();
+            containerRegistry.RegisterForNavigation<Views.BinaryOperation>();
             containerRegistry.RegisterForNavigation<Views.MultiCalc>();
         }
     }

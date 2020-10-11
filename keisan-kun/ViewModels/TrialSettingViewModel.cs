@@ -139,8 +139,7 @@ namespace keisan_kun.ViewModels
 
         private void GoToTrial()
         {
-            //_regionManager.RequestNavigate("ContentRegion", "Trial");
-            _regionManager.RequestNavigate("ContentRegion", "MultiCalc");
+            _regionManager.RequestNavigate("ContentRegion", "BinaryOperation");
         }
 
 
