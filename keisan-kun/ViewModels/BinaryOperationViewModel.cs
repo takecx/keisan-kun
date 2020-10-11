@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,25 @@ using System.Threading.Tasks;
 
 namespace keisan_kun.ViewModels
 {
+    public enum BinaryOperationType
+    {
+        /// <summary>
+        /// +
+        /// </summary>
+        plus,
+        /// <summary>
+        /// -
+        /// </summary>
+        minus,
+        /// <summary>
+        /// *
+        /// </summary>
+        multiply,
+        /// <summary>
+        /// /
+        /// </summary>
+        division,
+    }
     class BinaryOperationViewModel : BindableBase, INavigationAware
     {
         public bool IsNavigationTarget(NavigationContext navigationContext)
