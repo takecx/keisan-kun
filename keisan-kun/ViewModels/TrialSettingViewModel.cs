@@ -139,7 +139,18 @@ namespace keisan_kun.ViewModels
 
         private void GoToTrial()
         {
-            _regionManager.RequestNavigate("ContentRegion", "BinaryOperation");
+            var navigationParams = new NavigationParameters();
+            navigationParams.Add("operatorType", GenBinaryOperatorType(m_IsCheckedPlusOperator,m_IsCheckedMinusOperator,m_IsCheckedMultiplyOperator,m_IsCheckedDivisionOperator));
+            _regionManager.RequestNavigate("ContentRegion", "BinaryOperation",navigationParams);
+        }
+
+        private BinaryOperationType GenBinaryOperatorType(bool isCheckedPlusOperator, bool isCheckedMinusOperator, bool isCheckedMultiplyOperator, bool isCheckedDivisionOperator)
+        {
+            if (isCheckedPlusOperator) return BinaryOperationType.plus;
+            else if (isCheckedMinusOperator) return BinaryOperationType.minus;
+            else if (isCheckedMultiplyOperator) return BinaryOperationType.multiply;
+            else if (isCheckedDivisionOperator) return BinaryOperationType.division;
+            else throw new ArgumentException();
         }
 
 
