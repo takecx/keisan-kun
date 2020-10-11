@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WMPLib;
 
 namespace keisan_kun.ViewModels
 {
@@ -140,8 +141,19 @@ namespace keisan_kun.ViewModels
         private void GoToTrial()
         {
             var navigationParams = new NavigationParameters();
-            navigationParams.Add("operatorType", GenBinaryOperatorType(m_IsCheckedPlusOperator,m_IsCheckedMinusOperator,m_IsCheckedMultiplyOperator,m_IsCheckedDivisionOperator));
+            navigationParams.Add("OperatorType", GenBinaryOperatorType(m_IsCheckedPlusOperator,m_IsCheckedMinusOperator,m_IsCheckedMultiplyOperator,m_IsCheckedDivisionOperator));
+            navigationParams.Add("LimitationTime", GenLimitationTime(m_IsCheckedTrial1m, m_IsCheckedTrial3m, m_IsCheckedTrial5m, m_IsCheckedTrial10m, m_IsCheckedTrialInfinity));
             _regionManager.RequestNavigate("ContentRegion", "BinaryOperation",navigationParams);
+        }
+
+        private int GenLimitationTime(bool m_IsCheckedTrial1m, bool m_IsCheckedTrial3m, bool m_IsCheckedTrial5m, bool m_IsCheckedTrial10m, bool m_IsCheckedTrialInfinity)
+        {
+            if (m_IsCheckedTrial1m) return 60;
+            else if (m_IsCheckedTrial3m) return 180;
+            else if (m_IsCheckedTrial5m) return 300;
+            else if (m_IsCheckedTrial10m) return 600;
+            else if (m_IsCheckedTrialInfinity) return -1;
+            else throw new ArgumentException();
         }
 
         private BinaryOperationType GenBinaryOperatorType(bool isCheckedPlusOperator, bool isCheckedMinusOperator, bool isCheckedMultiplyOperator, bool isCheckedDivisionOperator)

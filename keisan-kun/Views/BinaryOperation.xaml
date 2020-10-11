@@ -10,6 +10,20 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="BinaryOperation" HorizontalAlignment="Center" Foreground="Pink"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding m_Point,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
+            <TextBlock Grid.Column="1" Text="{Binding m_RemainingTime,StringFormat={}{0:mm\\:ss\\.ff}, ConverterCulture=ja-jP,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Background="Black" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
+        </Grid>
+        <Grid Grid.RowSpan="2" Background="#77000000" Visibility="{Binding m_IsCountDowning,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="{Binding m_CountDown,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </UserControl>
