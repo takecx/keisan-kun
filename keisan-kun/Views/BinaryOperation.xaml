@@ -50,7 +50,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Style="{StaticResource Operand}" Text="{Binding m_FirstValue,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-            <materialDesign:PackIcon Grid.Column="1" Kind="{Binding m_BinaryOperationType,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BinOperatorType2IconKind}}" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <materialDesign:PackIcon Grid.Column="1" Kind="{Binding m_BinaryOperationType,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BinOperatorType2IconKind}}" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="2" Style="{StaticResource Operand}" Text="{Binding m_SecondValue,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Column="3" Style="{StaticResource Operator}" Text="="/>
             <TextBox Grid.Column="4" Style="{StaticResource Answer}" Text="{Binding m_Answer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
