@@ -32,12 +32,10 @@ namespace keisan_kun.ViewModels
     class BinaryOperationViewModel : BindableBase, INavigationAware
     {
         #region 定数
-        private readonly int MAIN_INTERVAL_MILLI = 10;
+        private readonly int MAIN_INTERVAL_MILLI = 15;
         #endregion
 
-        private BinaryOperationType _BinaryOperationType;
         private RegionManager _RegionManager;
-        private Stopwatch _Stopwatch = new Stopwatch();
         private DispatcherTimer _MainTimer = new DispatcherTimer();
         private DispatcherTimer _CountDownTimer = new DispatcherTimer();
 
@@ -69,6 +67,13 @@ namespace keisan_kun.ViewModels
         {
             get { return _IsCountDowning; }
             set { this.SetProperty(ref this._IsCountDowning, value); }
+        }
+
+        private BinaryOperationType _BinaryOperationType;
+        public BinaryOperationType m_BinaryOperationType
+        {
+            get { return _BinaryOperationType; }
+            set { this.SetProperty(ref this._BinaryOperationType, value); }
         }
 
         #endregion
@@ -113,7 +118,7 @@ namespace keisan_kun.ViewModels
             var opeType = navigationContext.Parameters["OperatorType"];
             if(opeType != null) 
             { 
-                _BinaryOperationType =  (BinaryOperationType)opeType;
+                m_BinaryOperationType =  (BinaryOperationType)opeType;
             }
 
             var limitTime = navigationContext.Parameters["LimitationTime"];
