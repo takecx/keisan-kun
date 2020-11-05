@@ -1,4 +1,6 @@
-﻿using keisan_kun.Model;
+﻿using ControlzEx.Standard;
+using keisan_kun.Model;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -104,10 +106,63 @@ namespace keisan_kun.ViewModels
 
         #endregion
 
+        #region Commands
+        public DelegateCommand ExcecuteCalcCommand { get; private set; }
+        private bool CanExcecuteCalc()
+        {
+            return true;
+        }
+
+        #endregion
+
         public BinaryOperationViewModel(RegionManager regionManager)
         {
             _RegionManager = regionManager;
+
+            CreateCommands();
             StartCountDown();
+        }
+
+        private void CreateCommands()
+        {
+            ExcecuteCalcCommand = new DelegateCommand(ExcecuteCalc, CanExcecuteCalc);
+        }
+
+        private void ExcecuteCalc()
+        {
+            if (m_Answer == null)
+            {
+                return;
+            }
+
+            if (questionGenerator.CheckAnswer(m_FirstValue, m_SecondValue, m_Answer))
+            {
+                //// せいかい
+                //m_Points++;
+                //m_LatestStatus = "◎";
+                //PlusCorrectAnswerCount();
+                //UpdateScoresForDisplay();
+                //if (m_Points % 10 == 0)
+                //{
+                //    PlaySounds(K_PIPO2);
+                //}
+                //else
+                //{
+                //    PlaySounds(K_PIPO);
+                //}
+                (m_FirstValue, m_SecondValue) = questionGenerator.UpdateQuestion();
+                //SpeechProblem();
+            }
+            else
+            {
+                //// まちがい
+                //m_Points--;
+                //m_LatestStatus = "X";
+                //PlusIncorrectAnswerCount();
+                //UpdateScoresForDisplay();
+                //PlaySounds(K_BOO);
+            }
+            m_Answer = null;
         }
 
         private void StartCountDown()

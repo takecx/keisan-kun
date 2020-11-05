@@ -10,6 +10,9 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Enter" Command="{Binding ExcecuteCalcCommand}"/>
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <converter:BinOperatorType2IconKind x:Key="BinOperatorType2IconKind"/>
         <Style x:Key="Operand" TargetType="TextBlock">
