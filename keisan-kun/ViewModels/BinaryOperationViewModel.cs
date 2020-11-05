@@ -138,7 +138,7 @@ namespace keisan_kun.ViewModels
             if (questionGenerator.CheckAnswer(m_FirstValue, m_SecondValue, m_Answer))
             {
                 //// せいかい
-                //m_Points++;
+                m_Point++;
                 //m_LatestStatus = "◎";
                 //PlusCorrectAnswerCount();
                 //UpdateScoresForDisplay();
@@ -156,7 +156,7 @@ namespace keisan_kun.ViewModels
             else
             {
                 //// まちがい
-                //m_Points--;
+                m_Point--;
                 //m_LatestStatus = "X";
                 //PlusIncorrectAnswerCount();
                 //UpdateScoresForDisplay();
