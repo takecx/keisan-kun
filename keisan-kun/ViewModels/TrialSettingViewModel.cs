@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using keisan_kun.Model;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -106,6 +107,13 @@ namespace keisan_kun.ViewModels
             }
         }
 
+        private bool _IsCarryUpChecked = false;
+        public bool m_IsCarryUpChecked
+        {
+            get { return _IsCarryUpChecked; }
+            set { this.SetProperty(ref this._IsCarryUpChecked, value); }
+        }
+
         #endregion
 
         #region Commands
@@ -143,7 +151,32 @@ namespace keisan_kun.ViewModels
             var navigationParams = new NavigationParameters();
             navigationParams.Add("OperatorType", GenBinaryOperatorType(m_IsCheckedPlusOperator,m_IsCheckedMinusOperator,m_IsCheckedMultiplyOperator,m_IsCheckedDivisionOperator));
             navigationParams.Add("LimitationTime", GenLimitationTime(m_IsCheckedTrial1m, m_IsCheckedTrial3m, m_IsCheckedTrial5m, m_IsCheckedTrial10m, m_IsCheckedTrialInfinity));
+            navigationParams.Add("QuestionType", GenQuestionType());
             _regionManager.RequestNavigate("ContentRegion", "BinaryOperation",navigationParams);
+        }
+
+        private QuestionType GenQuestionType()
+        {
+            if (m_IsCarryUpChecked == false && m_IsCheckedPlusOperator)
+            {
+                return QuestionType.add_single_no_carryup;
+            }
+            else if (m_IsCarryUpChecked == true && m_IsCheckedPlusOperator)
+            {
+                return QuestionType.add_single_carryup;
+            }
+            else if (m_IsCarryUpChecked == false && m_IsCheckedMinusOperator)
+            {
+                return QuestionType.sub_single_no_carrydown;
+            }
+            else if (m_IsCarryUpChecked == true && m_IsCheckedMinusOperator)
+            {
+                return QuestionType.sub_single_carrydown;
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         private int GenLimitationTime(bool m_IsCheckedTrial1m, bool m_IsCheckedTrial3m, bool m_IsCheckedTrial5m, bool m_IsCheckedTrial10m, bool m_IsCheckedTrialInfinity)
