@@ -136,6 +136,13 @@ namespace keisan_kun.ViewModels
             set { this.SetProperty(ref this._CurOperatorIncorrect, value); }
         }
 
+        private bool _IsTargetedCarryUp;
+        public bool m_IsTargetedCarryUp
+        {
+            get { return _IsTargetedCarryUp; }
+            set { this.SetProperty(ref this._IsTargetedCarryUp, value); }
+        }
+
         #endregion
 
         #region Commands
@@ -204,7 +211,18 @@ namespace keisan_kun.ViewModels
 
         private void UpdateUntilPositive()
         {
-            if (m_CurrentCalcType == K_OPERATORS[K_SUBSTR] && m_FirstValue - m_SecondValue < 0)
+            // 暫定的にここで処理する
+            // ちゃんと考えて別の場所に移動させること
+            if(m_CurrentCalcType == K_OPERATORS[K_ADDSTR] && m_IsTargetedCarryUp == true)
+            {
+                while(m_FirstValue + m_SecondValue < 10)
+                {
+                    UpdateProblem();
+
+                }
+                SpeechProblem();
+            }
+            else if (m_CurrentCalcType == K_OPERATORS[K_SUBSTR] && m_FirstValue - m_SecondValue < 0)
             {
                 // 0より おおきな すうじに なるようにする
                 while (m_FirstValue - m_SecondValue < 0)

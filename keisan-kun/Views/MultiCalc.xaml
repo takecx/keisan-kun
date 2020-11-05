@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:keisan_kun.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -27,11 +28,20 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox Grid.Column="0" ItemsSource="{Binding m_UserNames,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding m_CurrentSelectedUserName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0" HorizontalContentAlignment="Center" FontSize="30"/>
                 <Label Grid.Column="1" Content="{Binding m_LatestStatus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30"/>
                 <Label Grid.Column="2" Content="{Binding m_Points,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="30"/>
                 <Label Grid.Column="3" Content="コンボ" HorizontalContentAlignment="Left"  VerticalContentAlignment="Bottom" FontSize="15"/>
+                <ToggleButton Grid.Column="4" Style="{StaticResource MaterialDesignActionToggleButton}" IsChecked="{Binding m_IsTargetedCarryUp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <ToggleButton.Content>
+                        <materialDesign:PackIcon Kind="Numeric9" />
+                    </ToggleButton.Content>
+                    <materialDesign:ToggleButtonAssist.OnContent>
+                        <materialDesign:PackIcon Kind="Numeric9Plus" />
+                    </materialDesign:ToggleButtonAssist.OnContent>
+                </ToggleButton>
             </Grid>
             <Expander Grid.Row="1" Header="るいせき ポイント" Background="LightSeaGreen" HorizontalAlignment="Stretch" >
                 <Expander.HeaderTemplate>

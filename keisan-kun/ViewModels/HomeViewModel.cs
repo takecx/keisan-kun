@@ -15,6 +15,7 @@ namespace keisan_kun.ViewModels
 
         #region Commands
         public DelegateCommand GoToTrialSettingCommand { get; private set; }
+        public DelegateCommand GoToMultiCalcViewCommand { get; private set; }
         #endregion
 
         public HomeViewModel(IRegionManager regionManager)
@@ -27,6 +28,12 @@ namespace keisan_kun.ViewModels
         private void CreateCommands()
         {
             GoToTrialSettingCommand = new DelegateCommand(GoToTrialSetting);
+            GoToMultiCalcViewCommand = new DelegateCommand(GoToMultiCalcView);
+        }
+
+        private void GoToMultiCalcView()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "MultiCalc");
         }
 
         private void GoToTrialSetting()
