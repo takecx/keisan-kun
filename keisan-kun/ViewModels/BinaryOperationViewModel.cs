@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using keisan_kun.Model;
+using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace keisan_kun.ViewModels
         /// </summary>
         division,
     }
+
     class BinaryOperationViewModel : BindableBase, INavigationAware
     {
         #region 定数
@@ -38,6 +40,7 @@ namespace keisan_kun.ViewModels
         private RegionManager _RegionManager;
         private DispatcherTimer _MainTimer = new DispatcherTimer();
         private DispatcherTimer _CountDownTimer = new DispatcherTimer();
+        private MathQuestionGenerator questionGenerator;
 
         #region NotifiablePropery
 
@@ -74,6 +77,29 @@ namespace keisan_kun.ViewModels
         {
             get { return _BinaryOperationType; }
             set { this.SetProperty(ref this._BinaryOperationType, value); }
+        }
+        private int _FirstValue;
+        public int m_FirstValue
+        {
+            get { return _FirstValue; }
+            set { this.SetProperty(ref this._FirstValue, value); }
+        }
+
+        private int _SecondValue;
+        public int m_SecondValue
+        {
+            get { return _SecondValue; }
+            set { this.SetProperty(ref this._SecondValue, value); }
+        }
+
+        private int? _Answer;
+        public int? m_Answer
+        {
+            get { return _Answer; }
+            set
+            {
+                this.SetProperty(ref this._Answer, value);
+            }
         }
 
         #endregion
@@ -134,6 +160,14 @@ namespace keisan_kun.ViewModels
                     m_RemainingTime = new TimeSpan(0, 0, 0, (int)limitTime);
                     StartMainTimer();
                 }
+            }
+
+            var questionType = navigationContext.Parameters["QuestionType"];
+            if(questionType != null)
+            {
+                var questionTypeVal = (QuestionType)questionType;
+                questionGenerator = new MathQuestionGenerator(questionTypeVal);
+                (m_FirstValue, m_SecondValue) = questionGenerator.UpdateQuestion();
             }
         }
 
