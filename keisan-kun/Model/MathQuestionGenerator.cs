@@ -79,5 +79,20 @@ namespace keisan_kun.Model
         {
             return (random1.Next(randMin, randMax), random2.Next(randMin, randMax));
         }
+
+        public bool CheckAnswer(int first, int second, int? answer)
+        {
+            switch (questionType)
+            {
+                case QuestionType.add_single_no_carryup:
+                case QuestionType.add_single_carryup:
+                    return first + second == answer;
+                case QuestionType.sub_single_no_carrydown:
+                case QuestionType.sub_single_carrydown:
+                    return first - second == answer;
+                default:
+                    throw new Exception();
+            }
+        }
     }
 }
